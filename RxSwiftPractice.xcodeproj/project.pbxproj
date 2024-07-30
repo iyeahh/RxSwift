@@ -9,21 +9,28 @@
 /* Begin PBXBuildFile section */
 		764264AB2C590D360005A997 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764264AA2C590D360005A997 /* AppDelegate.swift */; };
 		764264AD2C590D360005A997 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764264AC2C590D360005A997 /* SceneDelegate.swift */; };
-		764264AF2C590D360005A997 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764264AE2C590D360005A997 /* ViewController.swift */; };
 		764264B22C590D360005A997 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 764264B12C590D360005A997 /* Base */; };
 		764264B42C590D370005A997 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 764264B32C590D370005A997 /* Assets.xcassets */; };
 		764264B72C590D370005A997 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 764264B62C590D370005A997 /* Base */; };
+		764264C12C590E580005A997 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 764264C02C590E580005A997 /* RxCocoa */; };
+		764264C32C590E580005A997 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 764264C22C590E580005A997 /* RxSwift */; };
+		764264C62C590E640005A997 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 764264C52C590E640005A997 /* SnapKit */; };
+		764264C82C590E710005A997 /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764264C72C590E710005A997 /* PickerViewController.swift */; };
+		764264CA2C5911750005A997 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764264C92C5911750005A997 /* TableViewController.swift */; };
+		764264CC2C5913B00005A997 /* ControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764264CB2C5913B00005A997 /* ControlViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		764264A72C590D360005A997 /* RxSwiftPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxSwiftPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		764264AA2C590D360005A997 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		764264AC2C590D360005A997 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		764264AE2C590D360005A997 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		764264B12C590D360005A997 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		764264B32C590D370005A997 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		764264B62C590D370005A997 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		764264B82C590D370005A997 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		764264C72C590E710005A997 /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
+		764264C92C5911750005A997 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		764264CB2C5913B00005A997 /* ControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +38,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				764264C62C590E640005A997 /* SnapKit in Frameworks */,
+				764264C32C590E580005A997 /* RxSwift in Frameworks */,
+				764264C12C590E580005A997 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +66,25 @@
 		764264A92C590D360005A997 /* RxSwiftPractice */ = {
 			isa = PBXGroup;
 			children = (
+				764264BE2C590E380005A997 /* RxCocoa */,
 				764264AA2C590D360005A997 /* AppDelegate.swift */,
 				764264AC2C590D360005A997 /* SceneDelegate.swift */,
-				764264AE2C590D360005A997 /* ViewController.swift */,
 				764264B02C590D360005A997 /* Main.storyboard */,
 				764264B32C590D370005A997 /* Assets.xcassets */,
 				764264B52C590D370005A997 /* LaunchScreen.storyboard */,
 				764264B82C590D370005A997 /* Info.plist */,
 			);
 			path = RxSwiftPractice;
+			sourceTree = "<group>";
+		};
+		764264BE2C590E380005A997 /* RxCocoa */ = {
+			isa = PBXGroup;
+			children = (
+				764264C72C590E710005A997 /* PickerViewController.swift */,
+				764264C92C5911750005A997 /* TableViewController.swift */,
+				764264CB2C5913B00005A997 /* ControlViewController.swift */,
+			);
+			path = RxCocoa;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +103,11 @@
 			dependencies = (
 			);
 			name = RxSwiftPractice;
+			packageProductDependencies = (
+				764264C02C590E580005A997 /* RxCocoa */,
+				764264C22C590E580005A997 /* RxSwift */,
+				764264C52C590E640005A997 /* SnapKit */,
+			);
 			productName = RxSwiftPractice;
 			productReference = 764264A72C590D360005A997 /* RxSwiftPractice.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +136,10 @@
 				Base,
 			);
 			mainGroup = 7642649E2C590D360005A997;
+			packageReferences = (
+				764264BF2C590E580005A997 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				764264C42C590E640005A997 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 764264A82C590D360005A997 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,9 +167,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				764264AF2C590D360005A997 /* ViewController.swift in Sources */,
 				764264AB2C590D360005A997 /* AppDelegate.swift in Sources */,
+				764264C82C590E710005A997 /* PickerViewController.swift in Sources */,
 				764264AD2C590D360005A997 /* SceneDelegate.swift in Sources */,
+				764264CC2C5913B00005A997 /* ControlViewController.swift in Sources */,
+				764264CA2C5911750005A997 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,6 +404,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		764264BF2C590E580005A997 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.7.1;
+			};
+		};
+		764264C42C590E640005A997 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		764264C02C590E580005A997 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 764264BF2C590E580005A997 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		764264C22C590E580005A997 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 764264BF2C590E580005A997 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		764264C52C590E640005A997 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 764264C42C590E640005A997 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7642649F2C590D360005A997 /* Project object */;
 }
