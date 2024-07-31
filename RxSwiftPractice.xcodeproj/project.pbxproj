@@ -18,6 +18,9 @@
 		764264C82C590E710005A997 /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764264C72C590E710005A997 /* PickerViewController.swift */; };
 		764264CA2C5911750005A997 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764264C92C5911750005A997 /* TableViewController.swift */; };
 		764264CC2C5913B00005A997 /* ControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764264CB2C5913B00005A997 /* ControlViewController.swift */; };
+		764264D32C5A343E0005A997 /* AddingNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764264D22C5A343E0005A997 /* AddingNumberViewController.swift */; };
+		764264D52C5A36540005A997 /* SimpleValidationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764264D42C5A36540005A997 /* SimpleValidationViewController.swift */; };
+		764264D72C5A38800005A997 /* SimpleTableViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764264D62C5A38800005A997 /* SimpleTableViewExampleViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,9 @@
 		764264C72C590E710005A997 /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		764264C92C5911750005A997 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		764264CB2C5913B00005A997 /* ControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlViewController.swift; sourceTree = "<group>"; };
+		764264D22C5A343E0005A997 /* AddingNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingNumberViewController.swift; sourceTree = "<group>"; };
+		764264D42C5A36540005A997 /* SimpleValidationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleValidationViewController.swift; sourceTree = "<group>"; };
+		764264D62C5A38800005A997 /* SimpleTableViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewExampleViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +72,7 @@
 		764264A92C590D360005A997 /* RxSwiftPractice */ = {
 			isa = PBXGroup;
 			children = (
+				764264D12C5A34220005A997 /* RxSample */,
 				764264BE2C590E380005A997 /* RxCocoa */,
 				764264AA2C590D360005A997 /* AppDelegate.swift */,
 				764264AC2C590D360005A997 /* SceneDelegate.swift */,
@@ -85,6 +92,16 @@
 				764264CB2C5913B00005A997 /* ControlViewController.swift */,
 			);
 			path = RxCocoa;
+			sourceTree = "<group>";
+		};
+		764264D12C5A34220005A997 /* RxSample */ = {
+			isa = PBXGroup;
+			children = (
+				764264D22C5A343E0005A997 /* AddingNumberViewController.swift */,
+				764264D42C5A36540005A997 /* SimpleValidationViewController.swift */,
+				764264D62C5A38800005A997 /* SimpleTableViewExampleViewController.swift */,
+			);
+			path = RxSample;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,9 +184,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				764264D32C5A343E0005A997 /* AddingNumberViewController.swift in Sources */,
+				764264D52C5A36540005A997 /* SimpleValidationViewController.swift in Sources */,
 				764264AB2C590D360005A997 /* AppDelegate.swift in Sources */,
 				764264C82C590E710005A997 /* PickerViewController.swift in Sources */,
 				764264AD2C590D360005A997 /* SceneDelegate.swift in Sources */,
+				764264D72C5A38800005A997 /* SimpleTableViewExampleViewController.swift in Sources */,
 				764264CC2C5913B00005A997 /* ControlViewController.swift in Sources */,
 				764264CA2C5911750005A997 /* TableViewController.swift in Sources */,
 			);
