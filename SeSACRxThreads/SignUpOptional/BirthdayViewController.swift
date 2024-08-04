@@ -7,6 +7,9 @@
  
 import UIKit
 import SnapKit
+import Toast
+import RxSwift
+import RxCocoa
 
 class BirthdayViewController: UIViewController {
     
@@ -65,22 +68,89 @@ class BirthdayViewController: UIViewController {
     }()
   
     let nextButton = PointButton(title: "가입하기")
-    
+
+    let year = BehaviorRelay(value: 2024)
+    let month = BehaviorRelay(value: 8)
+    let day = BehaviorRelay(value: 1)
+
+    let validation = BehaviorRelay(value: false)
+    let disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = Color.white
-        
         configureLayout()
-        
-        nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
-    }
-    
-    @objc func nextButtonClicked() {
-        navigationController?.pushViewController(SearchViewController(), animated: true)
+
+        bind()
     }
 
-    
+    private func bind() {
+        validation
+            .bind(with: self) { owner, value in
+                owner.infoLabel.text = value ? "가입 가능한 나이입니다" : "만 17세 이상만 가입 가능합니다"
+                owner.infoLabel.textColor = value ? .blue : .red
+                owner.nextButton.backgroundColor = value ? .blue : .lightGray
+                owner.nextButton.isEnabled = value
+            }
+            .disposed(by: disposeBag)
+
+        birthDayPicker.rx.date
+            .bind(with: self) { owner, date in
+                let component = Calendar.current.dateComponents([.day, .month, .year], from: date)
+
+                owner.year.accept(component.year!)
+                owner.month.accept(component.month!)
+                owner.day.accept(component.day!)
+
+                owner.validation.accept(owner.calculateAge())
+            }
+            .disposed(by: disposeBag)
+
+        year
+            .map { "\($0)년" }
+            .bind(to: yearLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        month
+            .map { "\($0)월" }
+            .bind(to: monthLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        day
+            .map { "\($0)일" }
+            .bind(to: dayLabel.rx.text)
+            .disposed(by: disposeBag)
+
+
+        nextButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.view.makeToast("가입되었습니다!")
+                owner.navigationController?.pushViewController(SearchViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func calculateAge() -> Bool {
+        var age: Int
+
+        let nowDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy MM dd"
+        let str = dateFormatter.string(from: nowDate)
+        let dateStringArray = str.split(separator: " ").map { Int($0)! }
+
+        if dateStringArray[1] > month.value {
+            age = dateStringArray[0] - year.value
+        } else if dateStringArray[1] == month.value && dateStringArray[2] >= day.value {
+            age = dateStringArray[0] - year.value
+        } else {
+            age = dateStringArray[0] - year.value - 1
+        }
+
+        return age >= 17
+    }
+
     func configureLayout() {
         view.addSubview(infoLabel)
         view.addSubview(containerStackView)
@@ -112,5 +182,4 @@ class BirthdayViewController: UIViewController {
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
-
 }
