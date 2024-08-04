@@ -35,16 +35,20 @@ final class ShoppingViewController: UIViewController {
         return textField
     }()
 
+    private let searchBar = UISearchBar()
+
     private let tableView = UITableView()
 
     let disposeBag = DisposeBag()
 
-    var list = BehaviorRelay(value:[
+    var data = [
         ShoppingItem(isCheck: true, todo: "그립톡 구매하기", isLike: true),
         ShoppingItem(isCheck: false, todo: "사이다 구매", isLike: false),
         ShoppingItem(isCheck: false, todo: "아이패드 케이스 최저가 알아보기", isLike: true),
         ShoppingItem(isCheck: false, todo: "양말", isLike: true)
-    ])
+    ]
+
+    lazy var list = BehaviorRelay(value: data)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +60,21 @@ final class ShoppingViewController: UIViewController {
     }
 
     private func bind() {
+        searchBar.rx.searchButtonClicked
+            .withLatestFrom(searchBar.rx.text.orEmpty)
+            .bind(with: self) { owner, value in
+                let array = owner.data.filter { $0.todo.contains(value) }
+                owner.list.accept(array)
+            }
+            .disposed(by: disposeBag)
+
+        searchBar.rx.text.orEmpty
+            .bind(with: self) { owner, value in
+                let array = value.isEmpty ? owner.data : owner.data.filter { $0.todo.contains(value) }
+                owner.list.accept(array)
+            }
+            .disposed(by: disposeBag)
+
         tableView.rx.itemDeleted
             .bind(with: self) { owner, indexPath in
                 var listArr = owner.list.value
@@ -81,17 +100,15 @@ final class ShoppingViewController: UIViewController {
 
                 cell.likeButton.rx.tap
                     .bind(with: self) { owner, _ in
-                        var listArr = owner.list.value
-                        listArr[row].isLike.toggle()
-                        owner.list.accept(listArr)
+                        owner.data[row].isLike.toggle()
+                        owner.list.accept(owner.data)
                     }
                     .disposed(by: cell.disposeBag)
 
                 cell.checkButton.rx.tap
                     .bind(with: self) { owner, _ in
-                        var listArr = owner.list.value
-                        listArr[row].isCheck.toggle()
-                        owner.list.accept(listArr)
+                        owner.data[row].isCheck.toggle()
+                        owner.list.accept(owner.data)
                     }
                     .disposed(by: cell.disposeBag)
             }
@@ -100,9 +117,8 @@ final class ShoppingViewController: UIViewController {
         addButton.rx.tap
             .withLatestFrom(textField.rx.text.orEmpty)
             .bind(with: self) { owner, value in
-                var listArr = owner.list.value
-                listArr.append(ShoppingItem(isCheck: false, todo: value, isLike: false))
-                owner.list.accept(listArr)
+                owner.data.append(ShoppingItem(isCheck: false, todo: value, isLike: false))
+                owner.list.accept(owner.data)
             }
             .disposed(by: disposeBag)
     }
@@ -110,6 +126,7 @@ final class ShoppingViewController: UIViewController {
     private func configureView() {
         view.backgroundColor = .white
         navigationItem.title = "쇼핑"
+        searchBar.searchBarStyle = .minimal
     }
 
     private func configrueHierarchy() {
@@ -117,11 +134,17 @@ final class ShoppingViewController: UIViewController {
         view.addSubview(addButton)
         view.addSubview(textField)
         view.addSubview(tableView)
+        view.addSubview(searchBar)
     }
 
     private func configureLayout() {
+        searchBar.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+        }
+
         grayBackgroundView.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(10)
+            make.top.equalTo(searchBar.snp.bottom).offset(10)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(10)
             make.height.equalTo(60)
         }
 
