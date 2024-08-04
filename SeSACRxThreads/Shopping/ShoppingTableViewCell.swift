@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 final class ShoppingTableViewCell: UITableViewCell {
     static let identifier = "ShoppingTableViewCell"
@@ -19,25 +21,32 @@ final class ShoppingTableViewCell: UITableViewCell {
         return view
     }()
 
-    private let checkButton = {
+    let checkButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         button.tintColor = .black
         return button
     }()
 
-    private let likeButton = {
+    let likeButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "star"), for: .normal)
         button.tintColor = .black
         return button
     }()
 
-    private let todoLabel = {
+    let todoLabel = {
         let label = UILabel()
         label.text = "dkdkdk"
         return label
     }()
+
+    var disposeBag = DisposeBag()
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -77,14 +86,5 @@ final class ShoppingTableViewCell: UITableViewCell {
             make.leading.equalTo(checkButton.snp.trailing).offset(10)
             make.trailing.equalTo(likeButton.snp.leading).inset(10)
         }
-    }
-
-    func setData(_ data: ShoppingItem) {
-        let checkImage = data.isCheck ? "checkmark.square.fill" : "checkmark.square"
-        let likeImage = data.isLike ? "star.fill" : "star"
-
-        checkButton.setImage(UIImage(systemName: checkImage), for: .normal)
-        todoLabel.text = data.todo
-        likeButton.setImage(UIImage(systemName: likeImage), for: .normal)
     }
 }

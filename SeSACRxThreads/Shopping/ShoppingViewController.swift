@@ -37,12 +37,14 @@ final class ShoppingViewController: UIViewController {
 
     private let tableView = UITableView()
 
-    var list = [
+    let disposeBag = DisposeBag()
+
+    var list = BehaviorRelay(value:[
         ShoppingItem(isCheck: true, todo: "그립톡 구매하기", isLike: true),
         ShoppingItem(isCheck: false, todo: "사이다 구매", isLike: false),
         ShoppingItem(isCheck: false, todo: "아이패드 케이스 최저가 알아보기", isLike: true),
         ShoppingItem(isCheck: false, todo: "양말", isLike: true)
-    ]
+    ])
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,59 @@ final class ShoppingViewController: UIViewController {
         configrueHierarchy()
         configureLayout()
         configureTableView()
+        bind()
+    }
+
+    private func bind() {
+        tableView.rx.itemDeleted
+            .bind(with: self) { owner, indexPath in
+                var listArr = owner.list.value
+                listArr.remove(at: indexPath.row)
+                owner.list.accept(listArr)
+            }
+            .disposed(by: disposeBag)
+
+        tableView.rx.itemSelected
+            .bind(with: self) { owner, _ in
+                owner.navigationController?.pushViewController(DetailViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
+
+        list
+            .bind(to: tableView.rx.items(cellIdentifier: ShoppingTableViewCell.identifier, cellType: ShoppingTableViewCell.self)) { (row, element, cell) in
+                let checkImage = element.isCheck ? "checkmark.square.fill" : "checkmark.square"
+                let likeImage = element.isLike ? "star.fill" : "star"
+
+                cell.checkButton.setImage(UIImage(systemName: checkImage), for: .normal)
+                cell.todoLabel.text = element.todo
+                cell.likeButton.setImage(UIImage(systemName: likeImage), for: .normal)
+
+                cell.likeButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        var listArr = owner.list.value
+                        listArr[row].isLike.toggle()
+                        owner.list.accept(listArr)
+                    }
+                    .disposed(by: cell.disposeBag)
+
+                cell.checkButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        var listArr = owner.list.value
+                        listArr[row].isCheck.toggle()
+                        owner.list.accept(listArr)
+                    }
+                    .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+
+        addButton.rx.tap
+            .withLatestFrom(textField.rx.text.orEmpty)
+            .bind(with: self) { owner, value in
+                var listArr = owner.list.value
+                listArr.append(ShoppingItem(isCheck: false, todo: value, isLike: false))
+                owner.list.accept(listArr)
+            }
+            .disposed(by: disposeBag)
     }
 
     private func configureView() {
@@ -89,22 +144,5 @@ final class ShoppingViewController: UIViewController {
     private func configureTableView() {
         tableView.register(ShoppingTableViewCell.self,forCellReuseIdentifier: ShoppingTableViewCell.identifier)
         tableView.separatorStyle = .none
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
-}
-
-extension ShoppingViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ShoppingTableViewCell.identifier, for: indexPath) as? ShoppingTableViewCell else {
-            return UITableViewCell()
-        }
-        let data = list[indexPath.row]
-        cell.setData(data)
-        return cell
     }
 }
