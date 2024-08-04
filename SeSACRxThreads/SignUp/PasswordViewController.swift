@@ -73,6 +73,6 @@ class PasswordViewController: UIViewController {
             make.height.equalTo(50)
             make.top.equalTo(passwordTextField.snp.bottom).offset(30)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
-        }    }
-
+        }
+    }
 }
