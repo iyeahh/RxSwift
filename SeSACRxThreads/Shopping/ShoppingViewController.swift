@@ -40,15 +40,7 @@ final class ShoppingViewController: UIViewController {
     private let tableView = UITableView()
 
     let disposeBag = DisposeBag()
-
-    var data = [
-        ShoppingItem(isCheck: true, todo: "그립톡 구매하기", isLike: true),
-        ShoppingItem(isCheck: false, todo: "사이다 구매", isLike: false),
-        ShoppingItem(isCheck: false, todo: "아이패드 케이스 최저가 알아보기", isLike: true),
-        ShoppingItem(isCheck: false, todo: "양말", isLike: true)
-    ]
-
-    lazy var list = BehaviorRelay(value: data)
+    let viewModel = ShoppingViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,36 +52,17 @@ final class ShoppingViewController: UIViewController {
     }
 
     private func bind() {
-        searchBar.rx.searchButtonClicked
-            .withLatestFrom(searchBar.rx.text.orEmpty)
-            .bind(with: self) { owner, value in
-                let array = owner.data.filter { $0.todo.contains(value) }
-                owner.list.accept(array)
-            }
-            .disposed(by: disposeBag)
+        let input = ShoppingViewModel.Input(
+            searchButtonClicked: searchBar.rx.searchButtonClicked,
+            searchText: searchBar.rx.text,
+            itemDeleted: tableView.rx.itemDeleted,
+            itemSelected: tableView.rx.itemSelected,
+            addButtonTapped: addButton.rx.tap,
+            text: textField.rx.text)
 
-        searchBar.rx.text.orEmpty
-            .bind(with: self) { owner, value in
-                let array = value.isEmpty ? owner.data : owner.data.filter { $0.todo.contains(value) }
-                owner.list.accept(array)
-            }
-            .disposed(by: disposeBag)
+        let output = viewModel.transform(input: input)
 
-        tableView.rx.itemDeleted
-            .bind(with: self) { owner, indexPath in
-                var listArr = owner.list.value
-                listArr.remove(at: indexPath.row)
-                owner.list.accept(listArr)
-            }
-            .disposed(by: disposeBag)
-
-        tableView.rx.itemSelected
-            .bind(with: self) { owner, _ in
-                owner.navigationController?.pushViewController(DetailViewController(), animated: true)
-            }
-            .disposed(by: disposeBag)
-
-        list
+        output.list
             .bind(to: tableView.rx.items(cellIdentifier: ShoppingTableViewCell.identifier, cellType: ShoppingTableViewCell.self)) { (row, element, cell) in
                 let checkImage = element.isCheck ? "checkmark.square.fill" : "checkmark.square"
                 let likeImage = element.isLike ? "star.fill" : "star"
@@ -98,27 +71,25 @@ final class ShoppingViewController: UIViewController {
                 cell.todoLabel.text = element.todo
                 cell.likeButton.setImage(UIImage(systemName: likeImage), for: .normal)
 
-                cell.likeButton.rx.tap
-                    .bind(with: self) { owner, _ in
-                        owner.data[row].isLike.toggle()
-                        owner.list.accept(owner.data)
-                    }
-                    .disposed(by: cell.disposeBag)
-
-                cell.checkButton.rx.tap
-                    .bind(with: self) { owner, _ in
-                        owner.data[row].isCheck.toggle()
-                        owner.list.accept(owner.data)
-                    }
-                    .disposed(by: cell.disposeBag)
+//                cell.likeButton.rx.tap
+//                    .bind(with: self) { owner, _ in
+//                        owner.data[row].isLike.toggle()
+//                        owner.list.accept(owner.data)
+//                    }
+//                    .disposed(by: cell.disposeBag)
+//
+//                cell.checkButton.rx.tap
+//                    .bind(with: self) { owner, _ in
+//                        owner.data[row].isCheck.toggle()
+//                        owner.list.accept(owner.data)
+//                    }
+//                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
 
-        addButton.rx.tap
-            .withLatestFrom(textField.rx.text.orEmpty)
-            .bind(with: self) { owner, value in
-                owner.data.append(ShoppingItem(isCheck: false, todo: value, isLike: false))
-                owner.list.accept(owner.data)
+        output.itemSelected
+            .bind(with: self) { owner, _ in
+                owner.navigationController?.pushViewController(DetailViewController(), animated: true)
             }
             .disposed(by: disposeBag)
     }

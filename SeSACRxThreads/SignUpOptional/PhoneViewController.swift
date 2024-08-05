@@ -16,38 +16,36 @@ class PhoneViewController: UIViewController {
     let nextButton = PointButton(title: "다음")
     let descriptionLabel = UILabel()
 
-    let descriptionText = Observable.just("숫자만 10글자 이상 입력해 주세요")
     let disposeBag = DisposeBag()
+    let viewModel = PhoneViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Color.white
         configureLayout()
-
         phoneTextField.text = "010"
-
         bind()
     }
 
     private func bind() {
-        descriptionText.bind(to: descriptionLabel.rx.text)
+        let input = PhoneViewModel.Input(
+            text: phoneTextField.rx.text,
+            tap: nextButton.rx.tap)
+
+        let output = viewModel.transform(input: input)
+
+        output.descriptionText.bind(to: descriptionLabel.rx.text)
             .disposed(by: disposeBag)
 
-        let validation = phoneTextField.rx.text.orEmpty
-            .scan("") { (oldValue, newValue) in
-               return newValue.isNumber ? newValue : oldValue
-            }
-            .map { $0.count >= 10 }
-
-        validation.bind(to: nextButton.rx.isEnabled, descriptionLabel.rx.isHidden)
+        output.validation.bind(to: nextButton.rx.isEnabled, descriptionLabel.rx.isHidden)
             .disposed(by: disposeBag)
 
-        validation.bind(with: self) { owner, value in
+        output.validation.bind(with: self) { owner, value in
             owner.nextButton.backgroundColor = value ? .systemPink : .lightGray
         }
         .disposed(by: disposeBag)
 
-        nextButton.rx.tap
+        output.tap
             .bind(with: self) { owner, _ in
                 owner.navigationController?.pushViewController(NicknameViewController(), animated: true)
             }
