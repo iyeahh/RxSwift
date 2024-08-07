@@ -24,8 +24,8 @@ class SearchViewController: UIViewController {
        
     let disposeBag = DisposeBag()
     
-    var list = Observable.just(["A", "B", "C", "AB", "D", "ABC", "BBB", "EC", "SA", "AAAB", "ED", "F", "G", "H"])
-    
+    let viewModel = SearchViewModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,15 +36,27 @@ class SearchViewController: UIViewController {
     }
     
     func bind() {
-        list
+        searchBar.rx.text.orEmpty
+            .bind(to: viewModel.inputQuery)
+            .disposed(by: disposeBag)
+
+        searchBar.rx.searchButtonClicked
+            .bind(to: viewModel.inputSearchButtonTap)
+            .disposed(by: disposeBag)
+
+        viewModel.list
             .bind(to: tableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
-                 
                 cell.appNameLabel.text = element
                 cell.appIconImageView.backgroundColor = .systemBlue
 
+                cell.downloadButton.rx.tap
+                    .subscribe(with: self) { owner, _ in
+                        owner.navigationController?.pushViewController(DetailViewController(), animated: true)
+                    }
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
-         
+
     }
      
     private func setSearchController() {

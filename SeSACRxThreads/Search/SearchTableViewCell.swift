@@ -13,7 +13,13 @@ import RxCocoa
 final class SearchTableViewCell: UITableViewCell {
     
     static let identifier = "SearchTableViewCell"
-    
+    var disposeBag = DisposeBag()
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
+
     let appNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .bold)
