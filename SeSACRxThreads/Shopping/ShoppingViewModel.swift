@@ -26,6 +26,8 @@ final class ShoppingViewModel {
         let itemSelected: ControlEvent<IndexPath>
         let addButtonTapped: ControlEvent<Void>
         let text: ControlProperty<String?>
+        let isChcekTap: PublishSubject<Int>
+        let isLikeTap: PublishSubject<Int>
     }
 
     struct Output {
@@ -64,6 +66,20 @@ final class ShoppingViewModel {
             .withLatestFrom(input.text.orEmpty)
             .bind(with: self) { owner, value in
                 owner.data.append(ShoppingItem(isCheck: false, todo: value, isLike: false))
+                list.accept(owner.data)
+            }
+            .disposed(by: disposeBag)
+
+        input.isLikeTap
+            .bind(with: self) { owner, value in
+                owner.data[value].isLike.toggle()
+                list.accept(owner.data)
+            }
+            .disposed(by: disposeBag)
+
+        input.isChcekTap
+            .bind(with: self) { owner, value in
+                owner.data[value].isCheck.toggle()
                 list.accept(owner.data)
             }
             .disposed(by: disposeBag)

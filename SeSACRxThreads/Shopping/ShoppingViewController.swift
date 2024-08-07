@@ -52,13 +52,19 @@ final class ShoppingViewController: UIViewController {
     }
 
     private func bind() {
+        let isCheckTap = PublishSubject<Int>()
+        let isLikeTap = PublishSubject<Int>()
+
         let input = ShoppingViewModel.Input(
             searchButtonClicked: searchBar.rx.searchButtonClicked,
             searchText: searchBar.rx.text,
             itemDeleted: tableView.rx.itemDeleted,
             itemSelected: tableView.rx.itemSelected,
             addButtonTapped: addButton.rx.tap,
-            text: textField.rx.text)
+            text: textField.rx.text,
+            isChcekTap: isCheckTap,
+            isLikeTap: isLikeTap
+        )
 
         let output = viewModel.transform(input: input)
 
@@ -71,19 +77,17 @@ final class ShoppingViewController: UIViewController {
                 cell.todoLabel.text = element.todo
                 cell.likeButton.setImage(UIImage(systemName: likeImage), for: .normal)
 
-//                cell.likeButton.rx.tap
-//                    .bind(with: self) { owner, _ in
-//                        owner.data[row].isLike.toggle()
-//                        owner.list.accept(owner.data)
-//                    }
-//                    .disposed(by: cell.disposeBag)
-//
-//                cell.checkButton.rx.tap
-//                    .bind(with: self) { owner, _ in
-//                        owner.data[row].isCheck.toggle()
-//                        owner.list.accept(owner.data)
-//                    }
-//                    .disposed(by: cell.disposeBag)
+                cell.likeButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        isLikeTap.onNext(row)
+                    }
+                    .disposed(by: cell.disposeBag)
+
+                cell.checkButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        isCheckTap.onNext(row)
+                    }
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
 
