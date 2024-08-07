@@ -77,9 +77,9 @@ final class ShoppingViewController: UIViewController {
         )
 
         let output = viewModel.transform(input: input)
-        viewModel.keywordList
+        
+        output.keywordList
             .bind(to: collectionView.rx.items(cellIdentifier: ShoppingCollectionViewCell.identifier, cellType: ShoppingCollectionViewCell.self)) { (item, element, cell) in
-
                 cell.label.text = element
             }
             .disposed(by: disposeBag)
@@ -118,6 +118,8 @@ final class ShoppingViewController: UIViewController {
                 owner.navigationController?.pushViewController(DetailViewController(), animated: true)
             }
             .disposed(by: disposeBag)
+
+        collectionView.rx.setDelegate(self).disposed(by: disposeBag)
     }
 
     private func configureView() {
@@ -172,5 +174,21 @@ final class ShoppingViewController: UIViewController {
     private func configureTableView() {
         tableView.register(ShoppingTableViewCell.self,forCellReuseIdentifier: ShoppingTableViewCell.identifier)
         tableView.separatorStyle = .none
+    }
+
+    func getCategoryCellSize(categoryText: String) -> (CGFloat, CGFloat) {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 13)
+        label.text = categoryText
+        label.sizeToFit()
+        return (label.frame.width, label.frame.height)
+    }
+}
+
+extension ShoppingViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let categoryTitle = viewModel.keywordList[indexPath.row]
+        let size = getCategoryCellSize(categoryText: categoryTitle)
+        return CGSize(width: size.0 + 20, height: size.1 + 20)
     }
 }

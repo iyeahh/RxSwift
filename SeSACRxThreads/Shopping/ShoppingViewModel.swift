@@ -19,7 +19,7 @@ final class ShoppingViewModel {
         ShoppingItem(isCheck: false, todo: "양말", isLike: true)
     ]
 
-    let keywordList = Observable.just(["스트림덱", "키보드", "손풍기", "컵", "마우스패드", "샌들", "아이스크림"])
+    let keywordList = ["스트림덱", "키보드", "손풍기", "컵", "마우스패드", "샌들", "아이스크림"]
 
     struct Input {
         let searchButtonClicked: ControlEvent<Void>
@@ -36,10 +36,12 @@ final class ShoppingViewModel {
     struct Output {
         let list: BehaviorRelay<[ShoppingItem]>
         let itemSelected: ControlEvent<IndexPath>
+        let keywordList: Observable<[String]>
     }
 
     func transform(input: Input) -> Output {
         let list = BehaviorRelay(value: data)
+        let keywordList = Observable.just(keywordList)
 
         input.searchButtonClicked
             .withLatestFrom(input.searchText.orEmpty)
@@ -93,6 +95,6 @@ final class ShoppingViewModel {
             }
             .disposed(by: disposeBag)
 
-        return Output(list: list, itemSelected: input.itemSelected)
+        return Output(list: list, itemSelected: input.itemSelected, keywordList: keywordList)
     }
 }
