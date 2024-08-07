@@ -35,6 +35,7 @@
 		763CCBCE2C61084A00EBC95C /* PhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763CCBCD2C61084A00EBC95C /* PhoneViewModel.swift */; };
 		763CCBD02C6109E200EBC95C /* BirthdayViewMdoel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763CCBCF2C6109E200EBC95C /* BirthdayViewMdoel.swift */; };
 		763CCBD22C610D2300EBC95C /* ShoppingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763CCBD12C610D2300EBC95C /* ShoppingViewModel.swift */; };
+		767C7C452C63886100115481 /* ShoppingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C7C442C63886100115481 /* ShoppingCollectionViewCell.swift */; };
 		76B415D12C5F489E0080EA04 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 76B415D02C5F489E0080EA04 /* Toast */; };
 		76B415D42C5F4A4A0080EA04 /* ShoppingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B415D32C5F4A4A0080EA04 /* ShoppingTableViewCell.swift */; };
 		76B415D62C5F4CC40080EA04 /* ShoppingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B415D52C5F4CC40080EA04 /* ShoppingViewController.swift */; };
@@ -88,6 +89,7 @@
 		763CCBCD2C61084A00EBC95C /* PhoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewModel.swift; sourceTree = "<group>"; };
 		763CCBCF2C6109E200EBC95C /* BirthdayViewMdoel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewMdoel.swift; sourceTree = "<group>"; };
 		763CCBD12C610D2300EBC95C /* ShoppingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingViewModel.swift; sourceTree = "<group>"; };
+		767C7C442C63886100115481 /* ShoppingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCollectionViewCell.swift; sourceTree = "<group>"; };
 		76B415D32C5F4A4A0080EA04 /* ShoppingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingTableViewCell.swift; sourceTree = "<group>"; };
 		76B415D52C5F4CC40080EA04 /* ShoppingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingViewController.swift; sourceTree = "<group>"; };
 		76B415D72C5F525C0080EA04 /* ShoppingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItem.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				76B415D52C5F4CC40080EA04 /* ShoppingViewController.swift */,
 				76B415D72C5F525C0080EA04 /* ShoppingItem.swift */,
 				763CCBD12C610D2300EBC95C /* ShoppingViewModel.swift */,
+				767C7C442C63886100115481 /* ShoppingCollectionViewCell.swift */,
 			);
 			path = Shopping;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				041280782AF1D14000972552 /* Resource.swift in Sources */,
 				0412806F2AEFAD2D00972552 /* BirthdayViewController.swift in Sources */,
 				041280652AEFA2F000972552 /* SignTextField.swift in Sources */,
+				767C7C452C63886100115481 /* ShoppingCollectionViewCell.swift in Sources */,
 				0412806C2AEFABFE00972552 /* PasswordViewController.swift in Sources */,
 				041280562AEFA04800972552 /* SignInViewController.swift in Sources */,
 				041280282AEF9BAB00972552 /* ViewController.swift in Sources */,

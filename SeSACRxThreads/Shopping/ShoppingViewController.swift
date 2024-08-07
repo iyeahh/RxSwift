@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 
 final class ShoppingViewController: UIViewController {
+    private let searchBar = UISearchBar()
+
     private let grayBackgroundView = {
         let view = UIView()
         view.backgroundColor = .lightGray
@@ -35,7 +37,7 @@ final class ShoppingViewController: UIViewController {
         return textField
     }()
 
-    private let searchBar = UISearchBar()
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
 
     private let tableView = UITableView()
 
@@ -51,9 +53,16 @@ final class ShoppingViewController: UIViewController {
         bind()
     }
 
+    private func layout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        return layout
+    }
+
     private func bind() {
         let isCheckTap = PublishSubject<Int>()
         let isLikeTap = PublishSubject<Int>()
+        let collectionviewCellTap = PublishSubject<String>()
 
         let input = ShoppingViewModel.Input(
             searchButtonClicked: searchBar.rx.searchButtonClicked,
@@ -63,10 +72,23 @@ final class ShoppingViewController: UIViewController {
             addButtonTapped: addButton.rx.tap,
             text: textField.rx.text,
             isChcekTap: isCheckTap,
-            isLikeTap: isLikeTap
+            isLikeTap: isLikeTap,
+            collectionviewCellTap: collectionviewCellTap
         )
 
         let output = viewModel.transform(input: input)
+        viewModel.keywordList
+            .bind(to: collectionView.rx.items(cellIdentifier: ShoppingCollectionViewCell.identifier, cellType: ShoppingCollectionViewCell.self)) { (item, element, cell) in
+
+                cell.label.text = element
+            }
+            .disposed(by: disposeBag)
+
+        collectionView.rx.modelSelected(String.self)
+            .bind(with: self) { owner, value in
+                collectionviewCellTap.onNext(value)
+            }
+            .disposed(by: disposeBag)
 
         output.list
             .bind(to: tableView.rx.items(cellIdentifier: ShoppingTableViewCell.identifier, cellType: ShoppingTableViewCell.self)) { (row, element, cell) in
@@ -102,14 +124,16 @@ final class ShoppingViewController: UIViewController {
         view.backgroundColor = .white
         navigationItem.title = "쇼핑"
         searchBar.searchBarStyle = .minimal
+        collectionView.register(ShoppingCollectionViewCell.self, forCellWithReuseIdentifier: ShoppingCollectionViewCell.identifier)
     }
 
     private func configrueHierarchy() {
+        view.addSubview(searchBar)
         view.addSubview(grayBackgroundView)
         view.addSubview(addButton)
         view.addSubview(textField)
+        view.addSubview(collectionView)
         view.addSubview(tableView)
-        view.addSubview(searchBar)
     }
 
     private func configureLayout() {
@@ -133,8 +157,14 @@ final class ShoppingViewController: UIViewController {
             make.trailing.equalTo(addButton.snp.leading).inset(10)
         }
 
-        tableView.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview().inset(10)
             make.top.equalTo(grayBackgroundView.snp.bottom).offset(10)
+            make.height.equalTo(40)
+        }
+
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(10)
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
     }

@@ -19,6 +19,8 @@ final class ShoppingViewModel {
         ShoppingItem(isCheck: false, todo: "양말", isLike: true)
     ]
 
+    let keywordList = Observable.just(["스트림덱", "키보드", "손풍기", "컵", "마우스패드", "샌들", "아이스크림"])
+
     struct Input {
         let searchButtonClicked: ControlEvent<Void>
         let searchText: ControlProperty<String?>
@@ -28,6 +30,7 @@ final class ShoppingViewModel {
         let text: ControlProperty<String?>
         let isChcekTap: PublishSubject<Int>
         let isLikeTap: PublishSubject<Int>
+        let collectionviewCellTap: PublishSubject<String>
     }
 
     struct Output {
@@ -61,6 +64,12 @@ final class ShoppingViewModel {
             }
             .disposed(by: disposeBag)
 
+        input.collectionviewCellTap
+            .bind(with: self) { owner, value in
+                owner.data.append(ShoppingItem(isCheck: false, todo: value, isLike: false))
+                list.accept(owner.data)
+            }
+            .disposed(by: disposeBag)
 
         input.addButtonTapped
             .withLatestFrom(input.text.orEmpty)
