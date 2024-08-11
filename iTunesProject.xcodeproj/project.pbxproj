@@ -9,21 +9,24 @@
 /* Begin PBXBuildFile section */
 		767C7C802C68E34100115481 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C7C7F2C68E34100115481 /* AppDelegate.swift */; };
 		767C7C822C68E34100115481 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C7C812C68E34100115481 /* SceneDelegate.swift */; };
-		767C7C842C68E34100115481 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C7C832C68E34100115481 /* ViewController.swift */; };
 		767C7C872C68E34100115481 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 767C7C862C68E34100115481 /* Base */; };
 		767C7C892C68E34200115481 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 767C7C882C68E34200115481 /* Assets.xcassets */; };
 		767C7C8C2C68E34200115481 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 767C7C8B2C68E34200115481 /* Base */; };
+		767C7C972C68E3E500115481 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C7C962C68E3E500115481 /* SearchViewController.swift */; };
+		767C7C992C68E43E00115481 /* ResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C7C982C68E43E00115481 /* ResultCollectionViewCell.swift */; };
+		767C7C9C2C68E47600115481 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 767C7C9B2C68E47600115481 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		767C7C7C2C68E34100115481 /* iTunesProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTunesProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		767C7C7F2C68E34100115481 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		767C7C812C68E34100115481 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		767C7C832C68E34100115481 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		767C7C862C68E34100115481 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		767C7C882C68E34200115481 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		767C7C8B2C68E34200115481 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		767C7C8D2C68E34200115481 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		767C7C962C68E3E500115481 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		767C7C982C68E43E00115481 /* ResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				767C7C9C2C68E47600115481 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +60,40 @@
 		767C7C7E2C68E34100115481 /* iTunesProject */ = {
 			isa = PBXGroup;
 			children = (
+				767C7C952C68E3B000115481 /* Model */,
+				767C7C942C68E3AC00115481 /* View */,
+				767C7C932C68E39700115481 /* ViewModel */,
 				767C7C7F2C68E34100115481 /* AppDelegate.swift */,
 				767C7C812C68E34100115481 /* SceneDelegate.swift */,
-				767C7C832C68E34100115481 /* ViewController.swift */,
 				767C7C852C68E34100115481 /* Main.storyboard */,
 				767C7C882C68E34200115481 /* Assets.xcassets */,
 				767C7C8A2C68E34200115481 /* LaunchScreen.storyboard */,
 				767C7C8D2C68E34200115481 /* Info.plist */,
 			);
 			path = iTunesProject;
+			sourceTree = "<group>";
+		};
+		767C7C932C68E39700115481 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		767C7C942C68E3AC00115481 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				767C7C962C68E3E500115481 /* SearchViewController.swift */,
+				767C7C982C68E43E00115481 /* ResultCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		767C7C952C68E3B000115481 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +112,9 @@
 			dependencies = (
 			);
 			name = iTunesProject;
+			packageProductDependencies = (
+				767C7C9B2C68E47600115481 /* SnapKit */,
+			);
 			productName = iTunesProject;
 			productReference = 767C7C7C2C68E34100115481 /* iTunesProject.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +143,9 @@
 				Base,
 			);
 			mainGroup = 767C7C732C68E34100115481;
+			packageReferences = (
+				767C7C9A2C68E47600115481 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 767C7C7D2C68E34100115481 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,9 +173,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				767C7C842C68E34100115481 /* ViewController.swift in Sources */,
+				767C7C972C68E3E500115481 /* SearchViewController.swift in Sources */,
 				767C7C802C68E34100115481 /* AppDelegate.swift in Sources */,
 				767C7C822C68E34100115481 /* SceneDelegate.swift in Sources */,
+				767C7C992C68E43E00115481 /* ResultCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,6 +409,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		767C7C9A2C68E47600115481 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		767C7C9B2C68E47600115481 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 767C7C9A2C68E47600115481 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 767C7C742C68E34100115481 /* Project object */;
 }
