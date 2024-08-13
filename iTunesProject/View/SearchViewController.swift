@@ -7,9 +7,15 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
+import Kingfisher
 
-final class SearchViewController: UIViewController {
-    private lazy var resultCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
+final class SearchViewController: UISearchController {
+    private let resultTableView = UITableView()
+    private let searchController = UISearchController(searchResultsController: nil)
+    private let viewModel = SearchViewModel()
+    private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,26 +24,16 @@ final class SearchViewController: UIViewController {
         bind()
     }
 
-    private func collectionViewLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        layout.minimumLineSpacing = 20
-        let width = UIScreen.main.bounds.width - 20
-        layout.itemSize = CGSize(width: width, height: width * 0.8)
-        return layout
-    }
-
     private func configureView() {
         view.backgroundColor = .white
-        view.addSubview(resultCollectionView)
-        resultCollectionView.snp.makeConstraints { make in
+        view.addSubview(resultTableView)
+        resultTableView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+        resultTableView.register(ResultTableViewCell.self, forCellReuseIdentifier: ResultTableViewCell.identifier)
     }
 
     private func configureNavi() {
-        let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "게임, 앱, 스토리 등"
         navigationItem.searchController = searchController
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -47,6 +43,23 @@ final class SearchViewController: UIViewController {
 
 extension SearchViewController {
     private func bind() {
+        let input = SearchViewModel.Input(
+            searchButtonTap: searchController.searchBar.rx.searchButtonClicked,
+            searchText: searchController.searchBar.rx.text.orEmpty)
+        let output = viewModel.transform(input: input)
 
+        output.appList
+            .bind(to: resultTableView.rx.items(cellIdentifier: ResultTableViewCell.identifier, cellType: ResultTableViewCell.self)) { (row, element, cell) in
+                cell.categoryLabel.text = element.genres.first
+                cell.descriptionImageView1.kf.setImage(with: URL(string: element.screenshotUrls[0]))
+                cell.descriptionImageView2.kf.setImage(with: URL(string: element.screenshotUrls[1]))
+                cell.descriptionImageView3.kf.setImage(with: URL(string: element.screenshotUrls[2]))
+                cell.companyLabel.text = element.sellerName
+                cell.nameLabel.text = element.trackName
+                let roundedDouble = round(element.averageUserRating)
+                cell.rateLabel.text = "\(roundedDouble)"
+                cell.iconImageView.kf.setImage(with: URL(string: element.artworkUrl100))
+            }
+            .disposed(by: disposeBag)
     }
 }

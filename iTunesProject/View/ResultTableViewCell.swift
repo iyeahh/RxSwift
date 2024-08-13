@@ -1,5 +1,5 @@
 //
-//  ResultCollectionViewCell.swift
+//  ResultTableViewCell.swift
 //  iTunesProject
 //
 //  Created by Bora Yang on 8/11/24.
@@ -8,17 +8,17 @@
 import UIKit
 import SnapKit
 
-final class ResultCollectionViewCell: UICollectionViewCell {
-    static let identifier = "ResultCollectionViewCell"
+final class ResultTableViewCell: UITableViewCell {
+    static let identifier = "ResultTableViewCell"
 
-    private let iconImageView = {
+    let iconImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 10
         return imageView
     }()
 
-    private let nameLabel = {
+    let nameLabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 13)
         return label
@@ -40,21 +40,21 @@ final class ResultCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
 
-    private let rateLabel = {
+    let rateLabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 10)
         label.textColor = .gray
         return label
     }()
 
-    private let companyLabel = {
+    let companyLabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 10)
         label.textColor = .gray
         return label
     }()
 
-    private let categoryLabel = {
+    let categoryLabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 10)
         label.textColor = .gray
@@ -62,39 +62,39 @@ final class ResultCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private let descriptionImageView1 = {
+    let descriptionImageView1 = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 10
         return imageView
     }()
 
-    private let descriptionImageView2 = {
+    let descriptionImageView2 = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 10
         return imageView
     }()
 
-    private let descriptionImageView3 = {
+    let descriptionImageView3 = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 10
         return imageView
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureHierarchy()
         configureLayout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
-extension ResultCollectionViewCell {
+extension ResultTableViewCell {
     private func configureHierarchy() {
         [iconImageView, nameLabel, downloadButton, starImageView, rateLabel, companyLabel, categoryLabel, descriptionImageView1, descriptionImageView2, descriptionImageView3].forEach { contentView.addSubview($0)}
     }
