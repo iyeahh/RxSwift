@@ -15,10 +15,12 @@ final class SearchViewModel: BaseViewModel {
     struct Input {
         let searchButtonTap: ControlEvent<Void>
         let searchText: ControlProperty<String>
+        let cellTap: ControlEvent<AppDetail>
     }
 
     struct Output {
         let appList: Observable<[AppDetail]>
+        let cellTap: ControlEvent<AppDetail>
     }
 
     func transform(input: Input) -> Output {
@@ -47,6 +49,6 @@ final class SearchViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
 
-        return Output(appList: appList)
+        return Output(appList: appList, cellTap: input.cellTap)
     }
 }

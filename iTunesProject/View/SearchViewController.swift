@@ -45,8 +45,10 @@ extension SearchViewController {
     private func bind() {
         let input = SearchViewModel.Input(
             searchButtonTap: searchController.searchBar.rx.searchButtonClicked,
-            searchText: searchController.searchBar.rx.text.orEmpty)
+            searchText: searchController.searchBar.rx.text.orEmpty,
+            cellTap: resultTableView.rx.modelSelected(AppDetail.self))
         let output = viewModel.transform(input: input)
+
 
         output.appList
             .bind(to: resultTableView.rx.items(cellIdentifier: ResultTableViewCell.identifier, cellType: ResultTableViewCell.self)) { (row, element, cell) in
@@ -59,6 +61,14 @@ extension SearchViewController {
                 let roundedDouble = round(element.averageUserRating)
                 cell.rateLabel.text = "\(roundedDouble)"
                 cell.iconImageView.kf.setImage(with: URL(string: element.artworkUrl100))
+            }
+            .disposed(by: disposeBag)
+
+        output.cellTap
+            .bind(with: self) { owner, data in
+                let vc = DetailViewController()
+                vc.appTitle = data.trackName
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }

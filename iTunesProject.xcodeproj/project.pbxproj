@@ -10,6 +10,7 @@
 		764E41862C6BAD95009F8107 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764E41852C6BAD95009F8107 /* SearchViewModel.swift */; };
 		764E41892C6BADE9009F8107 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764E41882C6BADE9009F8107 /* BaseViewModel.swift */; };
 		764E418C2C6BB486009F8107 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 764E418B2C6BB486009F8107 /* Alamofire */; };
+		764E418E2C6BB6D1009F8107 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764E418D2C6BB6D1009F8107 /* DetailViewController.swift */; };
 		767C7C802C68E34100115481 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C7C7F2C68E34100115481 /* AppDelegate.swift */; };
 		767C7C822C68E34100115481 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C7C812C68E34100115481 /* SceneDelegate.swift */; };
 		767C7C872C68E34100115481 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 767C7C862C68E34100115481 /* Base */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		764E41852C6BAD95009F8107 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		764E41882C6BADE9009F8107 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		764E418D2C6BB6D1009F8107 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		767C7C7C2C68E34100115481 /* iTunesProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTunesProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		767C7C7F2C68E34100115481 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		767C7C812C68E34100115481 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				767C7C962C68E3E500115481 /* SearchViewController.swift */,
 				767C7C982C68E43E00115481 /* ResultTableViewCell.swift */,
 				764E41852C6BAD95009F8107 /* SearchViewModel.swift */,
+				764E418D2C6BB6D1009F8107 /* DetailViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				764E418E2C6BB6D1009F8107 /* DetailViewController.swift in Sources */,
 				767C7CA12C69050B00115481 /* NetworkManager.swift in Sources */,
 				764E41862C6BAD95009F8107 /* SearchViewModel.swift in Sources */,
 				767C7C972C68E3E500115481 /* SearchViewController.swift in Sources */,
