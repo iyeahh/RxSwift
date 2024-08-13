@@ -22,7 +22,7 @@ final class SearchViewModel: BaseViewModel {
     }
 
     func transform(input: Input) -> Output {
-        let movieList = PublishSubject<[AppDetail]>()
+        let appList = PublishSubject<[AppDetail]>()
 
         input.searchButtonTap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
@@ -32,7 +32,12 @@ final class SearchViewModel: BaseViewModel {
                 NetworkManager.shared.callAppStore(searchWord: value)
             }
             .subscribe(with: self) { owner, appResult in
-                movieList.onNext(appResult.results)
+                switch appResult {
+                case .success(let value):
+                    appList.onNext(value.results)
+                case .failure(let error):
+                    print("에러 발생")
+                }
             } onError: { owner, error in
                 print("error \(error)")
             } onCompleted: { owner in
@@ -42,6 +47,6 @@ final class SearchViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
 
-        return Output(appList: movieList)
+        return Output(appList: appList)
     }
 }

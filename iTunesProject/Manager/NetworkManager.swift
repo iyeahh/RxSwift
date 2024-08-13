@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import Alamofire
 
 enum APIError: Error {
     case invaildURL
@@ -19,38 +20,21 @@ final class NetworkManager {
 
     private init() { }
 
-    func callAppStore(searchWord: String) -> Observable<AppResult> {
+    func callAppStore(searchWord: String) -> Single<Result<AppResult, APIError>> {
         let url = "https://itunes.apple.com/search?term=\(searchWord)&country=KR&media=software"
 
-        let result = Observable<AppResult>.create { observer in
-            guard let url = URL(string: url) else {
-                observer.onError(APIError.invaildURL)
-                return Disposables.create()
-            }
-
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                if error != nil {
-                    observer.onError(APIError.unknownResponse)
-                    return
+        return Single.create { observer -> Disposable in
+            AF.request(url)
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: AppResult.self) { response in
+                    switch response.result {
+                    case .success(let value):
+                        observer(.success(.success(value)))
+                    case .failure(let error):
+                        observer(.success(.failure(.invaildURL)))
+                    }
                 }
-
-                guard let response = response as? HTTPURLResponse,
-                      (200...299).contains(response.statusCode) else {
-                    observer.onError(APIError.status)
-                    return
-                }
-
-                if let data = data,
-                   let appData = try? JSONDecoder().decode(AppResult.self, from: data) {
-                    observer.onNext(appData)
-                    observer.onCompleted()
-                } else {
-                    print("응답은 왔으나 디코딩 실패")
-                    observer.onError(APIError.unknownResponse)
-                }
-            }.resume()
             return Disposables.create()
         }
-        return result
     }
 }
